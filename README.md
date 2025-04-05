@@ -1,0 +1,2 @@
+# Cross-platform sales management system
+ This repository contains the development of a comprehensive sales management system designed to operate seamlessly across multiple platforms. The system aims to optimize sales operations, improve customer relationship management, manage employees, and provide insightful analytics for better decision-making. Features include inventory tracking, sales reporting, and responsive design for accessibility across devices. Contributions and feedback are welcome to further enhance the system.
