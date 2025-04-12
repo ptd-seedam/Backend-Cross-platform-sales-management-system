@@ -1,10 +1,13 @@
-#Backend Cross-Platform Sales Management System (Laravel)
+# Backend Cross-Platform Sales Management System (Laravel)
+
 Laravel
 
-##Overview
+## Overview
+
 This repository contains the Laravel backend for a Cross-Platform Sales Management System. The system supports web, mobile, and desktop clients with centralized sales and inventory management.
 
-#Features
+# Features
+
 User Management: Authentication (Sanctum/Passport), roles & permissions
 
 Product Management: CRUD operations, inventory tracking
@@ -15,7 +18,8 @@ Reporting: Sales analytics, exports (Excel/PDF)
 
 RESTful API: Ready for integration with frontend platforms
 
-#Tech Stack
+# Tech Stack
+
 PHP: 8.0+
 
 Framework: Laravel 11.x
@@ -26,24 +30,26 @@ API Auth: Laravel Sanctum/Passport
 
 API Docs: Laravel API Documentation Generator/Scribe
 
-##Installation
-###Prerequisites
+## Installation
+
+### Prerequisites
+
 PHP 8.0+
 
 Composer
 
 MySQL
 
-##Setup Steps
+## Setup Steps
+
 Clone the repository:
 
 ```bash
-Copy
 git clone https://github.com/ptd-seedam/Backend-Cross-platform-sales-management-system.git
 cd Backend-Cross-platform-sales-management-system
 ```
 
-Install dependencies:
+### Install dependencies:
 
 ```bash
 Copy
@@ -51,7 +57,7 @@ composer install
 npm install
 ```
 
-Configure environment:
+### Configure environment:
 
 ```bash
 cp .env.example .env
@@ -71,38 +77,29 @@ DB_USERNAME=your_db_user
 DB_PASSWORD=your_db_password
 ```
 
-Run migrations and seeders:
+### Run migrations and seeders:
 
 ```bash
 Copy
 php artisan migrate --seed
 ```
 
-Start the development server:
+### Start the development server:
 
 ```bash
 php artisan serve
 ```
 
-Web server (Nginx/Apache)
-
-PHP OPcache enabled
-
-Queue worker (for jobs)
-
-Example deployment script:
+## Example deployment script:
 
 ```bash
-Copy
 composer install --optimize-autoloader --no-dev
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
 
-License
-MIT License
+## Contact
 
-Contact
 For support, please contact: [seedam5000@gmail.com]
 Project Maintainer: @ptd-seedam
