@@ -17,12 +17,12 @@ class InventoryController extends BaseController
 
     public function index()
     {
-        return response()->json($this->service->getAll());
+        return $this->sendResponse($this->service->getAll(), 'Inventory retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->service->getById($id));
+        return $this->sendResponse($this->service->getById($id), 'Inventory retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -33,7 +33,7 @@ class InventoryController extends BaseController
             'quantity' => 'required|integer|min:0',
         ]);
 
-        return response()->json($this->service->create($data), 201);
+        return $this->sendResponse($this->service->create($data), 'Inventory created successfully.');
     }
 
     public function update(Request $request, $id)
@@ -42,13 +42,13 @@ class InventoryController extends BaseController
             'quantity' => 'required|integer|min:0',
         ]);
 
-        return response()->json($this->service->update($id, $data));
+        return $this->sendResponse($this->service->update($id, $data), 'Inventory updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
 
-        return response()->json(['message' => 'Inventory deleted']);
+        return $this->sendResponse([], 'Inventory deleted successfully.');
     }
 }

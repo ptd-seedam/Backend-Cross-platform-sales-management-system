@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Store\Salary;
 
+use App\Http\Controllers\API\BaseController;
 use App\Services\Salary\SalaryService;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,12 @@ class SalaryController extends BaseController
 
     public function index()
     {
-        return response()->json($this->salaryService->getAll());
+        return $this->sendResponse($this->salaryService->getAll(), 'Salaries retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->salaryService->getById($id));
+        return $this->sendResponse($this->salaryService->getById($id), 'Salary retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -32,7 +33,7 @@ class SalaryController extends BaseController
             'payment_date' => 'required|date',
         ]);
 
-        return response()->json($this->salaryService->create($data), 201);
+        return $this->sendResponse($this->salaryService->create($data), 'Salary created successfully.', 201);
     }
 
     public function update(Request $request, $id)
@@ -43,13 +44,13 @@ class SalaryController extends BaseController
             'payment_date' => 'required|date',
         ]);
 
-        return response()->json($this->salaryService->update($id, $data));
+        return $this->sendResponse($this->salaryService->update($id, $data), 'Salary updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->salaryService->delete($id);
 
-        return response()->json(['message' => 'Salary record deleted']);
+        return $this->sendResponse([], 'Salary deleted successfully.');
     }
 }

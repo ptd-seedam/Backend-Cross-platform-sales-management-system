@@ -15,12 +15,12 @@ class ProductImageController extends BaseController
 
     public function index()
     {
-        return response()->json($this->service->getAll());
+        return $this->sendResponse($this->service->getAll(), 'Product images retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->service->getById($id));
+        return $this->sendResponse($this->service->getById($id), 'Product image retrieved successfully.');
     }
 
     public function store(\Illuminate\Http\Request $request)
@@ -30,7 +30,7 @@ class ProductImageController extends BaseController
             'image_path' => 'required|string|max:255',
         ]);
 
-        return response()->json($this->service->create($data), 201);
+        return $this->sendResponse($this->service->create($data), 'Product image created successfully.');
     }
 
     public function update(\Illuminate\Http\Request $request, $id)
@@ -40,6 +40,6 @@ class ProductImageController extends BaseController
             'image_path' => 'sometimes|string|max:255',
         ]);
 
-        return response()->json($this->service->update($id, $data));
+        return $this->sendResponse($this->service->update($id, $data), 'Product image updated successfully.');
     }
 }

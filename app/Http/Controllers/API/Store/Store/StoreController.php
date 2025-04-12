@@ -17,12 +17,12 @@ class StoreController extends BaseController
 
     public function index()
     {
-        return response()->json($this->storeService->getAllStores());
+        return $this->sendResponse($this->storeService->getAllStores(), 'Stores retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->storeService->getStoreById($id));
+        return $this->sendResponse($this->storeService->getStoreById($id), 'Store retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -33,7 +33,7 @@ class StoreController extends BaseController
             'manager_id' => 'required|exists:users,id',
         ]);
 
-        return response()->json($this->storeService->createStore($data), 201);
+        return $this->sendResponse($this->storeService->createStore($data), 'Store created successfully.', 201);
     }
 
     public function update(Request $request, $id)
@@ -44,13 +44,15 @@ class StoreController extends BaseController
             'manager_id' => 'sometimes|exists:users,id',
         ]);
 
-        return response()->json($this->storeService->updateStore($id, $data));
+        return $this->sendResponse($this->storeService->updateStore($id, $data), 'Store updated successfully.');
+
     }
 
     public function destroy($id)
     {
         $this->storeService->deleteStore($id);
 
-        return response()->json(['message' => 'Store deleted']);
+        return $this->sendResponse([], 'Store deleted successfully.');
+
     }
 }

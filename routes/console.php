@@ -9,3 +9,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('integrations:refresh-tokens')->everyFiveMinutes();
+Schedule::command('sync:products shopee')->hourly();
+Schedule::command('sync:products tiktok')->hourly();

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Store\OrderItem;
 
+use App\Http\Controllers\API\BaseController;
 use App\Services\OrderItem\OrderItemService;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class OrderItemController extends BaseController
 
     public function index($orderId)
     {
-        return response()->json($this->orderItemService->getAllOrderItems($orderId));
+        return $this->sendResponse($this->orderItemService->getAllOrderItems($orderId), 'Order items retrieved successfully.');
     }
 
     public function store(Request $request, $orderId)
@@ -28,23 +29,23 @@ class OrderItemController extends BaseController
 
         $data['order_id'] = $orderId;
 
-        return response()->json($this->orderItemService->createOrderItem($data), 201);
+        return $this->sendResponse($this->orderItemService->createOrderItem($data), 'Order item created successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->orderItemService->getOrderItem($id));
+        return $this->sendResponse($this->orderItemService->getOrderItem($id), 'Order item retrieved successfully.');
     }
 
     public function update(Request $request, $id)
     {
-        return response()->json($this->orderItemService->updateOrderItem($id, $request->all()));
+        return $this->sendResponse($this->orderItemService->updateOrderItem($id, $request->all()), 'Order item updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->orderItemService->deleteOrderItem($id);
 
-        return response()->json(['message' => 'Order item deleted']);
+        return $this->sendResponse([], 'Order item deleted successfully.');
     }
 }

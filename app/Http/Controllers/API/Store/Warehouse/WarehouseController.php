@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Store\Warehouse;
 
+use App\Http\Controllers\API\BaseController;
 use App\Services\Warehouse\WarehouseService;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,12 @@ class WarehouseController extends BaseController
 
     public function index()
     {
-        return response()->json($this->service->getAll());
+        return $this->sendResponse($this->service->getAll(), 'Warehouses retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->service->getById($id));
+        return $this->sendResponse($this->service->getById($id), 'Warehouse retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -32,7 +33,7 @@ class WarehouseController extends BaseController
             'store_id' => 'required|exists:stores,id',
         ]);
 
-        return response()->json($this->service->create($data), 201);
+        return $this->sendResponse($this->service->create($data), 'Warehouse created successfully.', 201);
     }
 
     public function update(Request $request, $id)
@@ -42,13 +43,14 @@ class WarehouseController extends BaseController
             'address' => 'sometimes|string',
         ]);
 
-        return response()->json($this->service->update($id, $data));
+        return $this->sendResponse($this->service->update($id, $data), 'Warehouse updated successfully.');
+
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
 
-        return response()->json(['message' => 'Warehouse deleted']);
+        return $this->sendResponse([], 'Warehouse deleted successfully.');
     }
 }

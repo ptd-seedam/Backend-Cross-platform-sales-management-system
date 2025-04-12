@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Store;
+namespace App\Http\Controllers\Api\Store\Product;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Services\ProductService;
@@ -17,7 +17,7 @@ class ProductController extends BaseController
 
     public function index()
     {
-        return response()->json($this->productService->getAllProducts());
+        return $this->sendResponse($this->productService->getAllProducts(), 'Products retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -29,23 +29,23 @@ class ProductController extends BaseController
             'description' => 'nullable|string',
         ]);
 
-        return response()->json($this->productService->createProduct($data), 201);
+        return $this->sendResponse($this->productService->createProduct($data), 'Product created successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->productService->getProduct($id));
+        return $this->sendResponse($this->productService->getProduct($id), 'Product retrieved successfully.');
     }
 
     public function update(Request $request, $id)
     {
-        return response()->json($this->productService->updateProduct($id, $request->all()));
+        return $this->sendResponse($this->productService->updateProduct($id, $request->all()), 'Product updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->productService->deleteProduct($id);
 
-        return response()->json(['message' => 'Deleted']);
+        return $this->sendResponse([], 'Product deleted successfully.');
     }
 }

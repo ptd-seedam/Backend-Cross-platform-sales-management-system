@@ -17,12 +17,12 @@ class EmployeeController extends BaseController
 
     public function index()
     {
-        return response()->json($this->employeeService->getAll());
+        return $this->sendResponse($this->employeeService->getAll(), 'Employees retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->employeeService->getById($id));
+        return $this->sendResponse($this->employeeService->getById($id), 'Employee retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class EmployeeController extends BaseController
             'role_id' => 'required|exists:roles,id',
         ]);
 
-        return response()->json($this->employeeService->create($data), 201);
+        return $this->sendResponse($this->employeeService->create($data), 'Employee created successfully.');
     }
 
     public function update(Request $request, $id)
@@ -46,13 +46,13 @@ class EmployeeController extends BaseController
             'role_id' => 'sometimes|exists:roles,id',
         ]);
 
-        return response()->json($this->employeeService->update($id, $data));
+        return $this->sendResponse($this->employeeService->update($id, $data), 'Employee updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->employeeService->delete($id);
 
-        return response()->json(['message' => 'Employee deleted']);
+        return $this->sendResponse([], 'Employee deleted successfully.');
     }
 }

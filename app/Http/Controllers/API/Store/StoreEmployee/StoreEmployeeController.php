@@ -17,12 +17,12 @@ class StoreEmployeeController extends BaseController
 
     public function index()
     {
-        return response()->json($this->service->getAll());
+        return $this->sendResponse($this->service->getAll(), 'Store employees retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->service->getById($id));
+        return $this->sendResponse($this->service->getById($id), 'Store employee retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -33,7 +33,8 @@ class StoreEmployeeController extends BaseController
             'assigned_at' => 'nullable|date',
         ]);
 
-        return response()->json($this->service->create($data), 201);
+        return $this->sendResponse($this->service->create($data), 'Store employee created successfully.', 201);
+
     }
 
     public function update(Request $request, $id)
@@ -43,13 +44,15 @@ class StoreEmployeeController extends BaseController
             'store_id' => 'required|exists:stores,id',
         ]);
 
-        return response()->json($this->service->update($id, $data));
+        return $this->sendResponse($this->service->update($id, $data), 'Store employee updated successfully.');
+
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
 
-        return response()->json(['message' => 'Deleted successfully']);
+        return $this->sendResponse([], 'Store employee deleted successfully.');
+
     }
 }

@@ -8,15 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (Auth::user()->role !== $role) {
-            return response()->json(['error' => 'Không có quyền.'], 403);
+        $user = Auth::user();
+
+        if (! $user || ! in_array($user->role->name, $roles)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         return $next($request);

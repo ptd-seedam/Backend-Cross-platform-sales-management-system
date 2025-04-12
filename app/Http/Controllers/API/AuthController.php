@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Integration;
 use App\Models\User;
-use App\Services\IntegrationService;
+use App\Services\Integration\IntegrationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,9 +40,42 @@ class AuthController extends BaseController
     }
 
     /**
-     * Get a JWT via given credentials.
+     * @OA\Post(
+     *     path="/api/auth//login",
+     *     tags={"Authentication"},
+     *     summary="Đăng nhập",
      *
-     * @return \Illuminate\Http\JsonResponse
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(
+     *             required={"email","password"},
+     *
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="123456")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Đăng nhập thành công",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="access_token", type="string", example="jwt_token_string"),
+     *                 @OA\Property(property="token_type", type="string", example="bearer"),
+     *                 @OA\Property(property="expires_in", type="integer", example=3600)
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Không thể xác minh"
+     *     )
+     * )
      */
     public function login()
     {
@@ -67,6 +100,29 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Get(
+     *     path="/api/auth//profile",
+     *     tags={"Authentication"},
+     *     summary="Lấy thông tin người dùng hiện tại",
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thông tin người dùng",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="Nguyen Van A"),
+     *                 @OA\Property(property="email", type="string", example="user@example.com")
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function profile()
     {
         $success = Auth::user();
@@ -79,6 +135,25 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Post(
+     *     path="/api/auth//logout",
+     *     tags={"Authentication"},
+     *     summary="Đăng xuất người dùng",
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Đăng xuất thành công",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Đăng xuất thành công.")
+     *         )
+     *     )
+     * )
+     */
     public function logout()
     {
         Auth::logout();
@@ -90,6 +165,29 @@ class AuthController extends BaseController
      * Refresh a token.
      *
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * @OA\Post(
+     *     path="/api/auth//refresh",
+     *     tags={"Authentication"},
+     *     summary="Refresh token mới",
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Refresh token thành công",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="access_token", type="string", example="new_jwt_token_string"),
+     *                 @OA\Property(property="token_type", type="string", example="bearer"),
+     *                 @OA\Property(property="expires_in", type="integer", example=3600)
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function refresh()
     {

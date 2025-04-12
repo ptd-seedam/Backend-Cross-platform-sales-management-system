@@ -45,7 +45,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Interfaces\ShipmentRepositoryInterface::class,
             \App\Repositories\ShipmentRepository::class,
             \App\Interfaces\SyncStatusRepositoryInterface::class,
-            \App\Repositories\SyncStatusRepository::class
+            \App\Repositories\SyncStatusRepository::class,
+            \App\Services\Sync\SyncTikTokService::class,
+            \App\Services\Sync\SyncShopeeService::class,
         );
     }
 

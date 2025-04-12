@@ -17,12 +17,12 @@ class CategoryController extends BaseController
 
     public function index()
     {
-        return response()->json($this->categoryService->getAll());
+        return $this->sendResponse($this->categoryService->getAll(), 'Categories retrieved successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->categoryService->getById($id));
+        return $this->sendResponse($this->categoryService->getById($id), 'Category retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class CategoryController extends BaseController
             'description' => 'nullable|string',
         ]);
 
-        return response()->json($this->categoryService->create($data), 201);
+        return $this->sendResponse($this->categoryService->create($data), 'Category created successfully.');
     }
 
     public function update(Request $request, $id)
@@ -42,13 +42,13 @@ class CategoryController extends BaseController
             'description' => 'nullable|string',
         ]);
 
-        return response()->json($this->categoryService->update($id, $data));
+        return $this->sendResponse($this->categoryService->update($id, $data), 'Category updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->categoryService->delete($id);
 
-        return response()->json(['message' => 'Category deleted']);
+        return $this->sendResponse([], 'Category deleted successfully.');
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Order;
+namespace App\Http\Controllers\Api\Store\Order;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController;
 use App\Services\Order\OrderService;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class OrderController extends BaseController
 {
     protected $orderService;
 
@@ -17,7 +17,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        return response()->json($this->orderService->getAllOrders());
+        return $this->sendResponse($this->orderService->getAllOrders(), 'Orders retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -28,23 +28,23 @@ class OrderController extends Controller
             'status' => 'nullable|string',
         ]);
 
-        return response()->json($this->orderService->createOrder($data), 201);
+        return $this->sendResponse($this->orderService->createOrder($data), 'Order created successfully.');
     }
 
     public function show($id)
     {
-        return response()->json($this->orderService->getOrder($id));
+        return $this->sendResponse($this->orderService->getOrder($id), 'Order retrieved successfully.');
     }
 
     public function update(Request $request, $id)
     {
-        return response()->json($this->orderService->updateOrder($id, $request->all()));
+        return $this->sendResponse($this->orderService->updateOrder($id, $request->all()), 'Order updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->orderService->deleteOrder($id);
 
-        return response()->json(['message' => 'Order deleted']);
+        return $this->sendResponse([], 'Order deleted successfully.');
     }
 }
